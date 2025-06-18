@@ -1,0 +1,59 @@
+<div class="planning-calendar-container">
+  <table class="planning-calendar-table">
+    <thead>
+      <tr>
+        <th class="sticky-col header-col">{{ config.stickyColumnHeader }}</th>
+        <th *ngFor="let header of monthHeaders" class="month-col">
+          {{ header.label }}
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let rowHeader of config.rowHeaders">
+        <td class="sticky-col row-header-col">{{ rowHeader.label }}</td>
+
+        <ng-container *ngFor="let monthHeader of monthHeaders">
+          <td
+            *ngIf="!calendarData.get(rowHeader.id)?.get(monthHeader.month)?.isHidden"
+            class="data-col"
+            [class.has-data]="calendarData.get(rowHeader.id)?.get(monthHeader.month)?.data"
+            [class.active]="isCellActive(rowHeader.id, monthHeader.month)"
+            [attr.colspan]="calendarData.get(rowHeader.id)?.get(monthHeader.month)?.data?.duration || 1"
+            (click)="onCellClick(rowHeader.id, monthHeader.month)"
+          >
+            <ng-container *ngIf="isCellActive(rowHeader.id, monthHeader.month); else displayState">
+              <input
+                type="text"
+                class="cell-input"
+                [(ngModel)]="editValue"
+                (keydown.enter)="saveEdit()"
+                (blur)="saveEdit()"
+                autofocus
+              />
+            </ng-container>
+
+            <ng-template #displayState>
+              <div class="cell-content">
+                <span>{{ calendarData.get(rowHeader.id)?.get(monthHeader.month)?.data?.value }}</span>
+                <button
+                  *ngIf="calendarData.get(rowHeader.id)?.get(monthHeader.month)?.data"
+                  class="delete-btn"
+                  (click)="$event.stopPropagation(); deleteEntry(rowHeader.id, monthHeader.month)"
+                  title="Clear cell"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+              </div>
+            </ng-template>
+
+            <div
+              *ngIf="calendarData.get(rowHeader.id)?.get(monthHeader.month)?.data"
+              class="resize-handle"
+              (mousedown)="onResizeStart($event, rowHeader.id, monthHeader.month)"
+            ></div>
+          </td>
+        </ng-container>
+      </tr>
+    </tbody>
+  </table>
+</div>

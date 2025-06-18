@@ -1,0 +1,52 @@
+.main-content {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.actions {
+  margin-top: 1.5rem;
+  text-align: right;
+}
+
+.save-button {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.save-button:hover {
+  background-color: #218838;
+}
+
+.output {
+  margin-top: 2rem;
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
+  padding: 1rem;
+}
+
+.output h3 {
+  margin-top: 0;
+}
+
+.output pre {
+  background-color: #e9ecef;
+  padding: 1rem;
+  border-radius: 4px;
+  white-space: pre-wrap; /* Wrap long lines */
+  word-break: break-all;
+}
